@@ -132,16 +132,14 @@ function isla_metabox_save( $post_id ) {
 add_action( 'save_post', 'isla_metabox_save' );
 
 
-function isla_filter_where( $where = '' ) {
-    // ...where dates are blank
-    $where .= " OR (mt1.meta_key = 'isla_start_date' AND CAST(mt1.meta_value AS CHAR) = '') OR (mt2.meta_key = 'isla_end_date' AND CAST(mt2.meta_value AS CHAR) = '')";
-    return $where;
-}
-
+//function isla_filter_where( $where = '' ) {
+//    // ...where dates are blank
+//    $where .= " OR (mt1.meta_key = 'isla_start_date' AND CAST(mt1.meta_value AS CHAR) = '') OR (mt2.meta_key = 'isla_end_date' AND CAST(mt2.meta_value AS CHAR) = '')";
+//    return $where;
+//}
+// https://www.codeinwp.com/blog/getting-posts-wp_query-class/
 function isla_display_announcement() {
-
     global $wpdb;
-
     $today = date('Y-m-d');
     $args = array(
         'post_type' => 'isla-announcements',
@@ -162,18 +160,12 @@ function isla_display_announcement() {
             )
         )
     );
-
     // Add a filter to do complex 'where' clauses...
-    add_filter( 'posts_where', 'isla_filter_where' );
-
+    //add_filter( 'posts_where', 'isla_filter_where' );
     $query = new WP_Query( $args );
-
     // Take the filter away again so this doesn't apply to all queries.
-    remove_filter( 'posts_where', 'isla_filter_where' );
-
-
+    //remove_filter( 'posts_where', 'isla_filter_where' );
     $announcements = $query->posts;
-
     if($announcements) :
 ?>
 
